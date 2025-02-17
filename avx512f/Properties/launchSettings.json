@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ConsoleApp1": {
+    "avx512f": {
       "commandName": "Project",
       "commandLineArgs": "< ops.ops"
     }
