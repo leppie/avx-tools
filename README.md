@@ -47,6 +47,8 @@ On an 8 CPU system it will be distrubuted as follows:
 [7] add
 ```
 
+The payload will run for 60 seconds. If you want a different time, set the `AVXTOOLS_TIMEOUT` env var to the desired number of milliseconds the payload should run. You can also quit by pressing Ctrl+C.
+
 ### Ops 
 
 - Nop 
