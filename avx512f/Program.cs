@@ -341,7 +341,7 @@ class Program
 				oc++;
 			}
 
-			if ((lc & 0xffff) == 0)
+			if ((lc >> 16) == 0 || (lc & 0xffff) == 0)
 			{
 #if !RESULT_CHECKING
 				if (expected == default)
@@ -353,9 +353,9 @@ class Program
 				{
 					if (v_r != expected || s != expected_scalar)
 					{
-						if (lc >> 20 > 1)
+						if (lc > 1)
 						{
-							Console.WriteLine($"Expectation failed ({lc >> 20}): {v_r} vs {expected}");
+							Console.WriteLine($"Expectation failed ({lc}): {v_r} vs {expected}");
 							throw new Exception();
 						}
 
@@ -364,6 +364,9 @@ class Program
 					}
 				}
 #endif
+			}
+			if ((lc & 0xffff) == 0)
+			{
 				timer = sw.ElapsedMilliseconds;
 				stats.oc = oc;
 				stats.lc = lc;
