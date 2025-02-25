@@ -23,6 +23,7 @@ class Program
 		Sum,
 		Dot,
 		FMA,
+		MAE,
 		Lerp,
 		Copy,
 		Write,
@@ -113,6 +114,9 @@ class Program
 			Op[] ops = Array.ConvertAll(args, a => Enum.Parse<Op>(a, true));
 			timer.Change(1000, 1000);
 
+			//Console.WriteLine(v_a_s);
+			//Console.WriteLine(v_b_s);
+
 			Parallel.For(0, all.Length, x =>
 			{
 				var tid = SetProcessorAffinity(1 << x);
@@ -185,6 +189,8 @@ class Program
 
 			var bl = all.MaxBy(x => x.oc / x.timer);
 
+			var cp = Thread.CurrentThread.Priority;
+
 			Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
 
 			foreach (var a in all)
@@ -222,7 +228,7 @@ class Program
 				Console.CursorTop = ct;
 			}
 
-			Thread.CurrentThread.Priority = ThreadPriority.Normal;
+			Thread.CurrentThread.Priority = cp;
 		}
 	}
 
@@ -295,6 +301,9 @@ class Program
 					case FMA:
 						v_r = Vector512.FusedMultiplyAdd(v_r, v_b, v_a);
 						break;
+					case MAE:
+						v_r = Vector512.MultiplyAddEstimate(v_r, v_b, v_a);
+						break;
 					case Lerp:
 						v_r = Vector512.Lerp(v_r, v_b, v_a);
 						break;
@@ -341,9 +350,10 @@ class Program
 				oc++;
 			}
 
+#if !RESULT_CHECKING
 			if ((lc >> 16) == 0 || (lc & 0xffff) == 0)
 			{
-#if !RESULT_CHECKING
+
 				if (expected == default)
 				{
 					expected = v_r;
@@ -363,8 +373,8 @@ class Program
 						expected_scalar = s;
 					}
 				}
-#endif
 			}
+#endif
 			if ((lc & 0xffff) == 0)
 			{
 				timer = sw.ElapsedMilliseconds;
@@ -393,7 +403,7 @@ class Program
 	static int SetProcessorAffinity(int coreMask)
 	{
 		int threadId = GetCurrentThreadId();
-		SafeThreadHandle handle = null;
+		SafeThreadHandle? handle = null;
 		var tempHandle = new object();
 		try
 		{
