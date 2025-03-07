@@ -41,28 +41,57 @@ catch
 {
 }
 
-
 static Vector512<double> Payload(Vector512<double> v_r)
 {
 	var v = v_r;
 
-	v_r = Vector512.Exp(v_r);
-	v_r = Vector512.Log(v_r);
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
 
 	if (v != v_r) throw new Exception("Fail");
 
-	v_r = Vector512.Exp(v_r);
-	v_r = Vector512.Log(v_r);
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
 
 	if (v != v_r) throw new Exception("Fail");
 
-	v_r = Vector512.Exp(v_r);
-	v_r = Vector512.Log(v_r);
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
 
 	if (v != v_r) throw new Exception("Fail");
 
-	v_r = Vector512.Exp(v_r);
-	v_r = Vector512.Log(v_r);
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	v_r = Vector512<double>.One / v_r;
+	v_r = Vector512<double>.One / v_r;
 
 	if (v != v_r) throw new Exception("Fail");
 

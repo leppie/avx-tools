@@ -24,6 +24,7 @@ try
 		new ParallelOptions { CancellationToken = cts.Token },
 		(x, s) =>
 		{
+			Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
 			var v_r = Vector512.Create(14d + x * 4);
 			var i = 0ul;
 
@@ -42,8 +43,17 @@ catch
 
 static Vector512<double> Payload(Vector512<double> v_r)
 {
+	var v = v_r;
+
 	var (v_s, v_c) = Vector512.SinCos(v_r);
 	v_r = Vector512.Hypot(v_s, v_c) * v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
 	(v_s, v_c) = Vector512.SinCos(v_r);
-	return Vector512.Hypot(v_s, v_c) * v_r;
+	v_r = Vector512.Hypot(v_s, v_c) * v_r;
+
+	if (v != v_r) throw new Exception("Fail");
+
+	return v_r;
 }

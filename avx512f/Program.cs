@@ -34,12 +34,14 @@ class Program
 		Sin,
 		SinCos,
 		Hypot,
+		R2D,
+		D2R,
 		Sleep,
 		Spin,
 		Spin10,
 		Yield
 	}
-
+	 
 	static void Main(string[] args)
 	{
 		if (!Vector512.IsHardwareAccelerated)
@@ -333,6 +335,12 @@ class Program
 						break;
 					case Hypot:
 						v_r = Vector512.Hypot(v_r, v_b);
+						break;
+					case R2D:
+						v_r = Vector512.RadiansToDegrees(v_r);
+						break;
+					case D2R:
+						v_r = Vector512.DegreesToRadians(v_r);
 						break;
 					case Sleep:
 						Thread.Sleep(0);
