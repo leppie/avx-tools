@@ -74,7 +74,8 @@ catch (OperationCanceledException)
 }
 catch (Exception ex)
 {
-	Console.WriteLine(ex);
+	Console.Error.WriteLine(ex);
+	Environment.ExitCode = 1;
 }
 
 static (Vector512<double>, Vector512<double>, Vector512<double>[], Vector512<double>[]) Init()
@@ -123,64 +124,3 @@ static void Payload(ref (Vector512<double> vt, Vector512<double> vb, Vector512<d
 
 	if (f != Math.PI) throw new Exception($"Fail: Not π! {f} CPU: {Thread.GetCurrentProcessorId()}");
 }
-
-
-//var n = i * 8;
-//var s = 
-//	Vector512.Sum(
-//		Vector512.Create(
-//			Vector512.Sum((vt / (a.n[n + 0] + vb)) / a.e[n + 0]),
-//			Vector512.Sum((vt / (a.n[n + 1] + vb)) / a.e[n + 1]),
-//			Vector512.Sum((vt / (a.n[n + 2] + vb)) / a.e[n + 2]),
-//			Vector512.Sum((vt / (a.n[n + 3] + vb)) / a.e[n + 3]),
-//			Vector512.Sum((vt / (a.n[n + 4] + vb)) / a.e[n + 4]),
-//			Vector512.Sum((vt / (a.n[n + 5] + vb)) / a.e[n + 5]),
-//			Vector512.Sum((vt / (a.n[n + 6] + vb)) / a.e[n + 6]),
-//			Vector512.Sum((vt / (a.n[n + 7] + vb)) / a.e[n + 7])));
-
-
-
-/*
-static Vector512<double> Payload(Vector512<double> v_r)
-{
-	Thread.BeginThreadAffinity();
-
-	double[] t = [4, -2, -1, -1];
-	double[] b = [1, 4, 5, 6];
-
-	var vht = Vector256.Create(t);
-	var vhb = Vector256.Create(b);
-
-	var vt = Vector512.Create(vht, vht);
-	var vb = Vector512.Create(vhb, vhb);
-
-	var f = 0.0;
-
-	for (int n = 0; n < 256; n += 2)
-	{
-		var v = Vector512.Create(
-					Vector256.Create(8.0 * n),
-					Vector256.Create(8.0 * (n + 1)));
-
-		v = v + vb;
-		v = vt / v;
-
-		var e = Math.Pow(16, n);
-		var ve = Vector512.Create(
-					Vector256.Create(e),
-					Vector256.Create(e * 16));
-
-		v = v / ve;
-
-		var s = Vector512.Sum(v);
-
-		f = f + s;
-	}
-
-	if (f != Math.PI) throw new Exception($"Fail: Not π! {f} CPU: {Thread.GetCurrentProcessorId()}");
-
-	Thread.EndThreadAffinity();
-
-	return v_r * (f / Math.PI);
-}
-*/

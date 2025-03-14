@@ -67,8 +67,13 @@ try
 			Console.WriteLine($"{v_r} {i / sw.Elapsed.TotalMicroseconds:F3}");
 		});
 }
-catch
+catch (OperationCanceledException)
 {
+}
+catch (Exception ex)
+{
+	Console.Error.WriteLine(ex);
+	Environment.ExitCode = 1;
 }
 
 
@@ -79,22 +84,22 @@ static Vector512<double> Payload(Vector512<double> v_r)
 	v_r = Vector512.Exp(v_r);
 	v_r = Vector512.Log(v_r);
 
-	if (v != v_r) throw new Exception("Fail");
+	if (v != v_r) throw new Exception($"Fail CPU: {Thread.GetCurrentProcessorId()}");
 
 	v_r = Vector512.Exp(v_r);
 	v_r = Vector512.Log(v_r);
 
-	if (v != v_r) throw new Exception("Fail");
+	if (v != v_r) throw new Exception($"Fail CPU: {Thread.GetCurrentProcessorId()}");
 
 	v_r = Vector512.Exp(v_r);
 	v_r = Vector512.Log(v_r);
 
-	if (v != v_r) throw new Exception("Fail");
+	if (v != v_r) throw new Exception($"Fail CPU: {Thread.GetCurrentProcessorId()}");
 
 	v_r = Vector512.Exp(v_r);
 	v_r = Vector512.Log(v_r);
 
-	if (v != v_r) throw new Exception("Fail");
+	if (v != v_r) throw new Exception($"Fail CPU: {Thread.GetCurrentProcessorId()}");
 
 	return v_r;
 }
